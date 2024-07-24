@@ -27,10 +27,6 @@ public sealed class AuthCommandHandler(
 
         var userTokenGenerated = await _tokenService.GenerateUserToken(user);
 
-        //Regulariza los tokens que quedaron sin cerrar
-
-        _ = _unitOfWork.SessionRepository.UpdateStatusByUnexpiredToken(user.Id, SessionStatus.Expired, cancellationToken);
-
         return new ResponseBase<UserAuthDto>(userTokenGenerated);
     }
 }
